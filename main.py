@@ -125,7 +125,32 @@ class BC_Data(Cliente_BC):
         
 
 
-
+    def bcu(self, start: str = None, end: str = None) -> pd.DataFrame:
+        
+        self.spc_clp = self.siete.cuadro(
+            
+            series = [
+                        'F022.BCU.TIN.AN20.UF.Z.M',
+                        'F022.BCU.TIN.AN10.UF.Z.M',
+                        'F022.BCU.TIN.AN05.UF.Z.M',
+                        'F022.BCU.TIN.AN02.UF.Z.M'
+                
+                     ],
+            nombres=[
+                        '20Y',
+                        '10Y',
+                        '5Y',
+                        '2Y'
+                    ],
+            desde= start,
+            hasta=end,
+            observado='max'
+            
+        )
+        
+        df : pd.DataFrame = self.spc_clp
+        
+        return df
 
 
 
@@ -134,7 +159,7 @@ class BC_Data(Cliente_BC):
 def main() -> None:
        
     bc = BC_Data()
-    swp = bc.tasa_swap_uf()
+    swp = bc.bcu()
     
     return swp
         
