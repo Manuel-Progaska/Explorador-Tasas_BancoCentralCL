@@ -5,7 +5,7 @@ from main import BC_Data
 
 ## FUNCIONES
 
-@st.cache_data
+@st.cache
 def tasas(nombre:str, start:str=None, end:str=None) -> pd.DataFrame:
 
     # datos banco central
