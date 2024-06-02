@@ -163,17 +163,74 @@ class BC_Data(Cliente_BC):
         return df
 
 
-def btu() -> None:
-    ...
+
+    def tasas_uf(self, start: str = None, end: str = None) -> pd.DataFrame:
+        """Tasas de interés mercado secundario, bonos, en UF (porcentaje) """
+
+        self.spc_clp = self.siete.cuadro(
+                    
+                    series = [
+                               'F022.BUF.TIS.AN30.UF.Z.D',
+                               'F022.BUF.TIS.AN20.UF.Z.D',
+                               'F022.BUF.TIS.AN10.UF.Z.D',
+                               'F022.BUF.TIS.AN05.UF.Z.D',
+                               'F022.BUF.TIS.AN02.UF.Z.D',
+                               'F022.BUF.TIS.AN01.UF.Z.D'
+                        
+                            ],
+                    nombres=[
+                                '30Y',
+                                '20Y',
+                                '10Y',
+                                '5Y',
+                                '2Y',
+                                '1Y'
+                            ],
+                    desde= start,
+                    hasta=end,
+                    observado='max'
+                    
+                )
+                
+        df : pd.DataFrame = self.spc_clp
+        
+        return df
 
 
 
+    def tasas_clp(self, start: str = None, end: str = None) -> pd.DataFrame:
+        """Tasas de interés mercado secundario, bonos, en UF (porcentaje) """
+
+        self.spc_clp = self.siete.cuadro(
+                    
+                    series = [
+                                'F022.BCLP.TIS.AN10.NO.Z.D',
+                                'F022.BCLP.TIS.AN05.NO.Z.D',
+                                'F022.BCLP.TIS.AN02.NO.Z.D',
+                                'F022.BCLP.TIS.AN01.NO.Z.D'
+                        
+                            ],
+                    nombres=[
+                                '10Y',
+                                '5Y',
+                                '2Y',
+                                '1Y'
+                            ],
+                    desde= start,
+                    hasta=end,
+                    observado='max'
+                    
+                )
+                
+        df : pd.DataFrame = self.spc_clp
+        
+        return df
     
 
 def main() -> None:
        
     bc = BC_Data()
-    swp = bc.bcu()
+    swp = bc.tasas_clp()
     
     return swp
         
