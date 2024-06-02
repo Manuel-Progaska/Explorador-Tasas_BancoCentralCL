@@ -163,6 +163,10 @@ class BC_Data(Cliente_BC):
         return df
 
 
+def btu() -> None:
+    ...
+
+
 
     
 
