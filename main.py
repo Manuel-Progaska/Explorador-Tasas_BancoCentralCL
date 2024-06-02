@@ -235,10 +235,3 @@ def main() -> None:
     return swp
         
         
-
-if __name__ == '__main__':
-    
-    data = main()
-    print(data)
-    
-    
