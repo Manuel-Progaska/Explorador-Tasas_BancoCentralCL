@@ -126,6 +126,16 @@ class BC_Data(Cliente_BC):
 
 
     def bcu(self, start: str = None, end: str = None) -> pd.DataFrame:
+        """
+        Tasas de interés de los bonos licitados por el BCCh, en UF (BCU) (porcentaje) 
+
+        Args:
+            start (str, optional): _description_. Defaults to None.
+            end (str, optional): _description_. Defaults to None.
+
+        Returns:
+            pd.DataFrame: _description_
+        """
         
         self.spc_clp = self.siete.cuadro(
             
