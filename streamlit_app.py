@@ -22,4 +22,4 @@ st.title('Explorador de Tasas Banco Central Chile')
 
 # tasas
 df : pd.DataFrame = tasas(nombre='Swap Camara CLP')
-st.dataframe(df)
+st.write(df)
