@@ -246,5 +246,3 @@ def tasas(nombre:str, start:str=None, end:str=None) -> pd.DataFrame:
 
         return df
 
-df : pd.DataFrame = tasas(nombre='Swap Camara CLP')
-print(df)
