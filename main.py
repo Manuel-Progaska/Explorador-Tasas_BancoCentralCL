@@ -4,7 +4,6 @@ import numpy as np
 import sqlite3
 from pathlib import Path
 from functools import partial
-from dataclasses import dataclass
 
 
 class BC_Data(bcchapi.webservice.Session):
@@ -13,18 +12,20 @@ class BC_Data(bcchapi.webservice.Session):
         super().__init__(usr='progaska.m@gmail.com',pwd='tubdag-rarhyz-juWjo8' )
         
     
-    def get_data(self, serie:str, name:str) -> pd.DataFrame:
+    def get_data(self, serie:str, name:str, start:str=None, end:str=None) -> pd.DataFrame:
         """_summary_
 
         Args:
             serie (str): _description_
             name (str): _description_
+            start (str, optional): _description_. Defaults to None.
+            end (str, optional): _description_. Defaults to None.
 
         Returns:
             pd.DataFrame: _description_
         """
         
-        data = self.get(serie)
+        data = self.get(serie, first_date=start, last_date=end)
         valores = data.Series["Obs"]
         
         df : pd.DataFrame = pd.DataFrame(valores)
@@ -71,7 +72,6 @@ class BC_Data(bcchapi.webservice.Session):
         
         # series
         df_series : pd.DataFrame = self.get_series(type=type)
-        dct_series : dict = dict(zip(df_series['SERIE'], df_series['NAME']))
         
         # data
         lst : list = []
