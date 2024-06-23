@@ -4,12 +4,24 @@ import numpy as np
 import sqlite3
 from pathlib import Path
 from functools import partial
+from dotenv import dotenv_values
 
 
 class BC_Data(bcchapi.webservice.Session):
     
     def __init__(self) -> None:
-        super().__init__(usr='progaska.m@gmail.com',pwd='tubdag-rarhyz-juWjo8' )
+        
+        # acceso a variables de entorno
+        config : dotenv_values = dotenv_values('.env')
+        
+        # usuario
+        self.user : str = config['bc_user']
+        
+        # clave
+        self.pwd : str = config['bc_pwd']
+        
+        # inicialiar clase padre con credenciales 
+        super().__init__(usr=self.user,pwd=self.pwd)
         
     
     def get_data(self, serie:str, name:str, start:str=None, end:str=None) -> pd.DataFrame:
@@ -88,6 +100,7 @@ class BC_Data(bcchapi.webservice.Session):
         
         df : pd.DataFrame = pd.concat(lst)
         pivot : pd.DataFrame = pd.pivot_table(df, index='FECHA', columns='NAME', values='VALOR', aggfunc='max')
+        pivot = pivot.reset_index()
         
         return pivot
         
