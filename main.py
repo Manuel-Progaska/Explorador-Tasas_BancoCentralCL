@@ -101,6 +101,8 @@ class BC_Data(bcchapi.webservice.Session):
         df : pd.DataFrame = pd.concat(lst)
         pivot : pd.DataFrame = pd.pivot_table(df, index='FECHA', columns='NAME', values='VALOR', aggfunc='max')
         pivot = pivot.reset_index()
+        pivot['FECHA'] = pd.to_datetime(pivot['FECHA'], format='%d-%m-%Y')
+        pivot = pivot.sort_values(by='FECHA', ascending=False)
         
         return pivot
         
