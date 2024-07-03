@@ -1,0 +1,14 @@
+[server]
+headless = true
+
+[browser]
+wideMode = true
+
+[theme]
+primaryColor="#5792ec"
+backgroundColor="#060606"
+secondaryBackgroundColor="#020127"
+textColor="#eae5e5"
+font="monospace"
+
+
