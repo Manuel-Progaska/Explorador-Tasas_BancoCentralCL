@@ -1,6 +1,6 @@
 # Explorador de Tasas Banco Central
 
-EL proyecto [Explorador de Tasas Banco Central](https://explorador-tasasbancocentralcl-er36unnfjfaffkdjzebxsh.streamlit.app) genera una plataforma para explorar las tasas de interés de los instrumentos como:
+EL proyecto [Explorador de Tasas Banco Central](https://explorador-tasasbancocentralcl-mpc.streamlit.app) genera una plataforma para explorar las tasas de interés de los instrumentos como:
 
 - BTU & BTP
 - BCU & BCP
