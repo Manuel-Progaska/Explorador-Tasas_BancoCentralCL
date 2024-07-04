@@ -58,8 +58,7 @@ end_ = str(st.session_state['end'])
 
 if selectted == 'Swap CLP':    
     # --- page ---
-    
-    
+
     # header
     st.header('Tasas Históricas SPC-CLP')
     st.write(start_, end_)
