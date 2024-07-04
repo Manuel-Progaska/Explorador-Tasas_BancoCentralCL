@@ -36,14 +36,14 @@ def data(type:str=None, start:str=None, end:str=None) -> pd.DataFrame:
 
 ## === OPTION MENU ===
 
-with st.sidebar:
-    selectted = option_menu(
-        menu_title=None,
-        options=['Swap CLP', 'Swap UF'],
-        icons=['database-fill', 'database-fill'],
-        orientation='vertical',
-        default_index=0
-    )
+#with st.sidebar:
+selectted = option_menu(
+    menu_title=None,
+    options=['Swap CLP', 'Swap UF'],
+    icons=['database-fill', 'database-fill'],
+    orientation='horizontal',
+    default_index=0
+)
 
 # dates
 st.sidebar.date_input('Inicio',key='start', format='YYYY-MM-DD', value=dt.datetime.now() - dt.timedelta(1))
