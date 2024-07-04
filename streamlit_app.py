@@ -7,7 +7,7 @@ from main import BC_Data
 
 # page confict
 st.set_page_config(layout="wide")
-st.markdown('# EXPLORADOR DE TASAS BANCO CENTRAL CHILE')
+
 
 # incialize BC_Data
 bc = BC_Data()
@@ -45,8 +45,10 @@ selectted = option_menu(
     default_index=0
 )
 
+st.markdown('# EXPLORADOR DE TASAS BANCO CENTRAL CHILE')
+
 # dates
-st.sidebar.date_input('Inicio',key='start', format='YYYY-MM-DD', value=dt.datetime.now() - dt.timedelta(1))
+st.sidebar.date_input('Inicio',key='start', format='YYYY-MM-DD', value=dt.datetime.now() - dt.timedelta(30))
 st.sidebar.date_input('Fin',key='end', format='YYYY-MM-DD')
 start_ = str(st.session_state['start'])
 end_ = str(st.session_state['end'])
