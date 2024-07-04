@@ -13,7 +13,7 @@ st.markdown('# EXPLORADOR DE TASAS BANCO CENTRAL CHILE')
 bc = BC_Data()
 
 ## FUNCTIONS
-@st.cache
+@st.cache_data
 def data(type:str=None, start:str=None, end:str=None) -> pd.DataFrame:
     """_summary_
 
@@ -27,6 +27,9 @@ def data(type:str=None, start:str=None, end:str=None) -> pd.DataFrame:
     """
     
     df: pd.DataFrame = bc.load_type(type=type, start=start, end=end)
+    df['FECHA'] = df['FECHA'].dt.date
+    df.index = df['FECHA']
+    df.drop('FECHA', inplace=True, axis=1)
     
     return df
     
@@ -54,10 +57,15 @@ end_ = str(st.session_state['end'])
 if selectted == 'Swap CLP':    
     # --- page ---
     
+    
     # header
     st.header('Tasas Históricas SPC-CLP')
     st.write(start_, end_)
 
     # data
     df_data : pd.DataFrame = data(type='SWAP_CLP', start=start_, end=end_)
-    st.dataframe(df_data, use_container_width=True, hide_index=True)
+    df_data = df_data[(df_data != 'NaN').any(axis=1)]
+    df_data = df_data.astype(float).round(2,)
+    st.dataframe(df_data, key='data_swp_cl')
+
+    
