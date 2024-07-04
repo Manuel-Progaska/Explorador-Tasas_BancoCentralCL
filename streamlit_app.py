@@ -13,6 +13,7 @@ st.markdown('# EXPLORADOR DE TASAS BANCO CENTRAL CHILE')
 bc = BC_Data()
 
 ## FUNCTIONS
+@st.cache
 def data(type:str=None, start:str=None, end:str=None) -> pd.DataFrame:
     """_summary_
 
