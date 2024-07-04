@@ -68,4 +68,18 @@ if selectted == 'Swap CLP':
     df_data = df_data.astype(float).round(2,)
     st.dataframe(df_data, key='data_swp_cl')
 
+if selectted == 'Swap UF':    
+    # --- page ---
+    
+    
+    # header
+    st.header('Tasas Históricas SPC-CLP')
+    st.write(start_, end_)
+
+    # data
+    df_data : pd.DataFrame = data(type='SWAP_CLP', start=start_, end=end_)
+    df_data = df_data[(df_data != 'NaN').any(axis=1)]
+    df_data = df_data.astype(float).round(2,)
+    st.dataframe(df_data, key='data_swp_cl')
+
     
