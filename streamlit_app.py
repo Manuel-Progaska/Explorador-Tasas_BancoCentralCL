@@ -44,9 +44,7 @@ with st.sidebar:
 if selectted == 'Swap CLP':    
     # page
     col1, col2 = st.columns(2)
-    with col1:
-        st.date_input('Inicio',key='start')
-    with col2:
-        st.date_input('Fin',key='end')
+    st.sidebar.date_input('Inicio',key='start')
+    st.sidebar.date_input('Fin',key='end')
     st.header('Tasas Históricas SPC-CLP')
     st.dataframe(swp_cl, use_container_width=True, hide_index=True)
