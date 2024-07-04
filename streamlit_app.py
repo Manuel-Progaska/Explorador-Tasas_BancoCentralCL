@@ -45,7 +45,7 @@ selectted = option_menu(
     default_index=0
 )
 
-st.markdown('# EXPLORADOR DE TASAS BANCO CENTRAL CHILE')
+st.sidebar.markdown('# EXPLORADOR DE TASAS BANCO CENTRAL CHILE')
 
 # dates
 st.sidebar.date_input('Inicio',key='start', format='YYYY-MM-DD', value=dt.datetime.now() - dt.timedelta(30))
