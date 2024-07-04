@@ -34,18 +34,22 @@ def data(type:str=None, start:str=None, end:str=None) -> pd.DataFrame:
     return df
     
 
-## === OPTION MENU ===
+## === LAYOUT ===
+
+st.sidebar.image('assets/images/BC_LOGO.png')
+#st.sidebar.markdown('# EXPLORADOR BANCO CENTRAL CHILE')
 
 #with st.sidebar:
-selectted = option_menu(
-    menu_title=None,
-    options=['Swap CLP', 'Swap UF'],
-    icons=['database-fill', 'database-fill'],
-    orientation='horizontal',
-    default_index=0
-)
+with st.sidebar:
+    selectted = option_menu(
+        menu_title=None,
+        options=['Swap CLP', 'Swap UF'],
+        icons=['database-fill', 'database-fill'],
+        orientation='vertical',
+        default_index=0
+    )
 
-st.sidebar.markdown('# EXPLORADOR DE TASAS BANCO CENTRAL CHILE')
+
 
 # dates
 st.sidebar.date_input('Inicio',key='start', format='YYYY-MM-DD', value=dt.datetime.now() - dt.timedelta(30))
@@ -66,7 +70,7 @@ if selectted == 'Swap CLP':
     # data
     df_data : pd.DataFrame = data(type='SWAP_CLP', start=start_, end=end_)
     df_data = df_data[(df_data != 'NaN').any(axis=1)]
-    df_data = df_data.astype(float).round(2,)
+    df_data = df_data.astype(float).round(4)
     st.dataframe(df_data, key='data_swp_cl')
 
 
