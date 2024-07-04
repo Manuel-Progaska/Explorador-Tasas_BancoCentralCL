@@ -13,19 +13,6 @@ st.markdown('# EXPLORADOR DE TASAS BANCO CENTRAL CHILE')
 bc = BC_Data()
 
 ## FUNCTIONS
-@st.cache_data
-def swaps_cl() -> pd.DataFrame:
-    """_summary_
-
-    Returns:
-        pd.DataFrame: _description_
-    """
-    
-    
-    df: pd.DataFrame = bc.load_type(type='SWAP_CLP')
-    
-    return df
-
 def data(type:str=None, start:str=None, end:str=None) -> pd.DataFrame:
     """_summary_
 
@@ -42,10 +29,6 @@ def data(type:str=None, start:str=None, end:str=None) -> pd.DataFrame:
     
     return df
     
-    
-
-## DATOS
-swp_cl = swaps_cl() 
 
 ## === OPTION MENU ===
 
@@ -58,6 +41,13 @@ with st.sidebar:
         default_index=0
     )
 
+# dates
+st.sidebar.date_input('Inicio',key='start', format='YYYY-MM-DD', value=dt.datetime.now() - dt.timedelta(1))
+st.sidebar.date_input('Fin',key='end', format='YYYY-MM-DD')
+start_ = str(st.session_state['start'])
+end_ = str(st.session_state['end'])
+
+
 ## === SWAP CLP ===
 
 if selectted == 'Swap CLP':    
@@ -65,13 +55,8 @@ if selectted == 'Swap CLP':
     
     # header
     st.header('Tasas Históricas SPC-CLP')
-    
-    # dates
-    st.sidebar.date_input('Inicio',key='start')
-    st.sidebar.date_input('Fin',key='end')
-    start = str(st.session_state['start'])
-    end = str(st.session_state['end'])
-    
+    st.write(start_, end_)
+
     # data
-    df_data : pd.DataFrame = data(type='SWAP_CLP', start=start, end=end)
+    df_data : pd.DataFrame = data(type='SWAP_CLP', start=start_, end=end_)
     st.dataframe(df_data, use_container_width=True, hide_index=True)
