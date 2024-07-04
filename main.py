@@ -72,7 +72,7 @@ class BC_Data(bcchapi.webservice.Session):
         return df
     
     
-    def load_type(self, type:str) -> pd.DataFrame:
+    def load_type(self, type:str=None, start:str=None, end:str=None) -> pd.DataFrame:
         """_summary_
 
         Args:
@@ -92,7 +92,7 @@ class BC_Data(bcchapi.webservice.Session):
            serie: str = df_series['SERIE'].iloc[i]
            name: str = df_series['NAME'].iloc[i]
            
-           df_aux: pd.DataFrame = self.get_data(serie=serie, name=name)
+           df_aux: pd.DataFrame = self.get_data(serie=serie, name=name, start=start, end=end)
            df_aux = df_aux.rename(columns={name:'VALOR'})
            df_aux['NAME'] = name
            df_aux = df_aux[['FECHA', 'NAME', 'VALOR']]
