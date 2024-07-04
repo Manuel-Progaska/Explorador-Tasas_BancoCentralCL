@@ -5,10 +5,11 @@ headless = true
 wideMode = true
 
 [theme]
-primaryColor="#5792ec"
-backgroundColor="#060606"
-secondaryBackgroundColor="#020127"
-textColor="#eae5e5"
+primaryColor="#6955b3"
+backgroundColor="#f7f1f1"
+secondaryBackgroundColor="#9c9c9e"
+textColor="#0e0e0e"
 font="monospace"
+
 
 

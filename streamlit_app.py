@@ -6,6 +6,7 @@ from main import BC_Data
 
 # page confict
 st.set_page_config(layout="wide")
+st.title('EXPLORADOR DE TASAS BANCO CENTRAL CHILE')
 
 
 # incialize BC_Data
@@ -28,19 +29,21 @@ def swaps_cl() -> pd.DataFrame:
 ## DATOS
 swp_cl = swaps_cl() 
 
-## LAYOUT
+## === OPTION MENU ===
 
-# sidebar menu
 with st.sidebar:
     selectted = option_menu(
-        menu_title='Tasas',
-        options=['Swap CLP', 'SWAP UF']
+        menu_title=None,
+        options=['Swap CLP', 'SWAP UF'],
+        icons=['database-fill', 'database-fill'],
+        orientation='vertical',
+        default_index=0
     )
 
-# sidebar
-st.sidebar.title('Parametros')
+## === SWAP CLP ===
 
-# page
-st.title('EXPLORADOR DE TASAS BANCO CENTRAL CHILE')
-st.header('Tasas Históricas SPC-CLP')
-st.dataframe(swp_cl, use_container_width=True, hide_index=True)
+if selectted == 'Swap CLP':
+    # page
+    
+    st.header('Tasas Históricas SPC-CLP')
+    st.dataframe(swp_cl, use_container_width=True, hide_index=True)
