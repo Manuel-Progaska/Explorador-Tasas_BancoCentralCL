@@ -1,6 +1,7 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
 import pandas as pd
+import datetime as dt
 from functools import partial
 from main import BC_Data
 
@@ -25,6 +26,24 @@ def swaps_cl() -> pd.DataFrame:
     
     return df
 
+def data(type:str=None, start:str=None, end:str=None) -> pd.DataFrame:
+    """_summary_
+
+    Args:
+        type (str, optional): _description_. Defaults to None.
+        start (str, optional): _description_. Defaults to None.
+        end (str, optional): _description_. Defaults to None.
+
+    Returns:
+        pd.DataFrame: _description_
+    """
+    
+    df: pd.DataFrame = bc.load_type(type=type, start=start, end=end)
+    
+    return df
+    
+    
+
 ## DATOS
 swp_cl = swaps_cl() 
 
@@ -42,9 +61,17 @@ with st.sidebar:
 ## === SWAP CLP ===
 
 if selectted == 'Swap CLP':    
-    # page
-    col1, col2 = st.columns(2)
+    # --- page ---
+    
+    # header
+    st.header('Tasas Históricas SPC-CLP')
+    
+    # dates
     st.sidebar.date_input('Inicio',key='start')
     st.sidebar.date_input('Fin',key='end')
-    st.header('Tasas Históricas SPC-CLP')
-    st.dataframe(swp_cl, use_container_width=True, hide_index=True)
+    start = str(st.session_state['start'])
+    end = str(st.session_state['end'])
+    
+    # data
+    df_data : pd.DataFrame = data(type='SWAP_CLP', start=start, end=end)
+    st.dataframe(df_data, use_container_width=True, hide_index=True)
