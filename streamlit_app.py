@@ -62,7 +62,7 @@ start_ = str(st.session_state['start'])
 end_ = str(st.session_state['end'])
 
 # created by
-st.sidebar.markdown('Created by: [`Manuel Progaska`](https://www.linkedin.com/feed/)')
+st.sidebar.markdown('Created by: [`Manuel Progaska`](https://cl.linkedin.com/in/manuel-progaska-concha-98b304135)')
 
 
 ## === SWAPS ===
