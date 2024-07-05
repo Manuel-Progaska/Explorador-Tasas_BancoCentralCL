@@ -68,31 +68,34 @@ st.sidebar.markdown('Created by: [`Manuel Progaska`](https://cl.linkedin.com/in/
 ## === SWAPS ===
 if selectted == 'Swap Promedio Camara':   
     # --- page ---
+    # data
+    df_data : pd.DataFrame = data(type='SWAP_CLP', start=start_, end=end_)
+    
+    #metrics
     first_col, second_col, third_col, fourth_col = st.columns(4)
 
     with first_col:
-        st.metric(label='TEST',value='5.75%',delta='6.0%', delta_color='normal')
-        st.metric(label='',value='5.75%',delta='6.0%', delta_color='normal')
+        st.metric(label='SPC 90d',value='-',delta='6.0%', delta_color='normal')
+        st.metric(label='SPC 180d',value='-',delta='6.0%', delta_color='normal')
 
     with second_col:
-        st.metric(label='TEST',value='5.75%',delta='6.0%', delta_color='normal')
-        st.metric(label='TEST',value='5.75%',delta='6.0%', delta_color='normal')
+        st.metric(label='SPC 360d',value='-',delta='6.0%', delta_color='normal')
+        st.metric(label='SPC 2Y',value='-',delta='6.0%', delta_color='normal')
 
     with third_col:
-        st.metric(label='TEST',value='5.75%',delta='6.0%', delta_color='normal')
-        st.metric(label='TEST',value='5.75%',delta='6.0%', delta_color='normal')
+        st.metric(label='SPC 3Y',value='-',delta='6.0%', delta_color='normal')
+        st.metric(label='SPC 4Y',value='-',delta='6.0%', delta_color='normal')
         
     with fourth_col:
-        st.metric(label='TEST',value='5.75%',delta='6.0%', delta_color='normal')
-        st.metric(label='TEST',value='5.75%',delta='6.0%', delta_color='normal')
+        st.metric(label='SPC 5Y',value='-',delta='6.0%', delta_color='normal')
+        st.metric(label='SPC 10Y',value='-',delta='6.0%', delta_color='normal')
     
     # header
     st.markdown('---')
     st.markdown('### Data histórica SPC-CLP')
     st.write(start_, end_)
 
-    # data
-    df_data : pd.DataFrame = data(type='SWAP_CLP', start=start_, end=end_)
+    # table
     df_data = df_data[(df_data != 'NaN').any(axis=1)]
     df_data = df_data.astype(float).round(4)
     st.dataframe(df_data, key='data_swp_cl', use_container_width=True)
