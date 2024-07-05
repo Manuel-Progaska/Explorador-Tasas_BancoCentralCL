@@ -13,7 +13,6 @@ st.set_page_config(
 
     )
 
-
 # === BC_Data ===
 bc = BC_Data()
 
@@ -42,7 +41,7 @@ def data(type:str=None, start:str=None, end:str=None) -> pd.DataFrame:
 ## === LAYOUT ===
 
 # --- sidebar ---
-# --- image ---
+# image
 st.sidebar.image('assets/images/BC_LOGO.png')
 
 # menu
