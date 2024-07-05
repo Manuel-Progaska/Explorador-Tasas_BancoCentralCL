@@ -96,7 +96,7 @@ if selectted == 'Swap Promedio Camara':
 
         with first_col:
             #st.metric(label='SPC 90d',value=f'{df_aux.loc[end_,'SWP_CLP_90D']}',delta='', delta_color='normal')
-            st.metric(label='SPC 180d',value=f'{df_aux.loc[end_,'SWP_CLP_180D']}',delta='6.0%', delta_color='normal')
+            st.metric(label='SPC 180d',value=f'{df_aux.loc[end_,"SWP_CLP_180D"]}',delta='6.0%', delta_color='normal')
 
         with second_col:
             st.metric(label='SPC 360d',value=f'{df_aux.loc[end_,'SWP_CLP_360D']}',delta='6.0%', delta_color='normal')
