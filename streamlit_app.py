@@ -56,8 +56,8 @@ with st.sidebar:
     )
 
 # dates
-st.sidebar.date_input('Inicio',key='start', format='YYYY-MM-DD', value=dt.datetime.now() - dt.timedelta(30))
-st.sidebar.date_input('Fin',key='end', format='YYYY-MM-DD')
+st.sidebar.date_input('Inicio',key='start', format='YYYY-MM-DD', value=dt.datetime.now() - dt.timedelta(31))
+st.sidebar.date_input('Fin',key='end', format='YYYY-MM-DD', value=dt.datetime.now() - dt.timedelta(1))
 start_ = str(st.session_state['start'])
 end_ = str(st.session_state['end'])
 
