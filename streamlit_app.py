@@ -66,7 +66,7 @@ st.sidebar.markdown('Created by: [`Manuel Progaska`](https://www.linkedin.com/fe
 
 
 ## === SWAPS ===
-if selectted == 'Swap Promedio Camara':    
+if selectted == 'Swap Promedio Camara':   
     # --- page ---
     first_col, second_col, third_col, fourth_col = st.columns(4)
 
@@ -87,7 +87,7 @@ if selectted == 'Swap Promedio Camara':
         st.metric(label='TEST',value='5.75%',delta='6.0%', delta_color='normal')
     
     # header
-    st.markdown('### ')
+    st.markdown('---')
     st.markdown('### Data histórica SPC-CLP')
     st.write(start_, end_)
 
