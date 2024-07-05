@@ -95,20 +95,20 @@ if selectted == 'Swap Promedio Camara':
         first_col, second_col, third_col, fourth_col = st.columns(4)
 
         with first_col:
-            #st.metric(label='SPC 90d',value=f'{df_aux.loc[end_,'SWP_CLP_90D']}',delta='', delta_color='normal')
+            st.metric(label='SPC 90d',value=f'{df_aux.loc[end_,"SWP_CLP_90D"]}',delta='', delta_color='normal')
             st.metric(label='SPC 180d',value=f'{df_aux.loc[end_,"SWP_CLP_180D"]}',delta='6.0%', delta_color='normal')
 
         with second_col:
-            st.metric(label='SPC 360d',value=f'{df_aux.loc[end_,'SWP_CLP_360D']}',delta='6.0%', delta_color='normal')
-            st.metric(label='SPC 2Y',value=f'{df_aux.loc[end_,'SWP_CLP_02Y']}',delta='6.0%', delta_color='normal')
+            st.metric(label='SPC 360d',value=f'{df_aux.loc[end_,"SWP_CLP_360D"]}',delta='6.0%', delta_color='normal')
+            st.metric(label='SPC 2Y',value=f'{df_aux.loc[end_,"SWP_CLP_02Y"]}',delta='6.0%', delta_color='normal')
 
         with third_col:
-            st.metric(label='SPC 3Y',value=f'{df_aux.loc[end_,'SWP_CLP_03Y']}',delta='6.0%', delta_color='normal')
+            st.metric(label='SPC 3Y',value=f'{df_aux.loc[end_,"SWP_CLP_03Y"]}',delta='6.0%', delta_color='normal')
             st.metric(label='SPC 4Y',value=f'{df_aux.loc[end_,'SWP_CLP_04Y']}',delta='6.0%', delta_color='normal')
             
         with fourth_col:
-            st.metric(label='SPC 5Y',value=f'{df_aux.loc[end_,'SWP_CLP_05Y']}',delta='6.0%', delta_color='normal')
-            st.metric(label='SPC 10Y',value=f'{df_aux.loc[end_,'SWP_CLP_10Y']}',delta='6.0%', delta_color='normal')
+            st.metric(label='SPC 5Y',value=f'{df_aux.loc[end_,"SWP_CLP_05Y"]}',delta='6.0%', delta_color='normal')
+            st.metric(label='SPC 10Y',value=f'{df_aux.loc[end_,"SWP_CLP_10Y"]}',delta='6.0%', delta_color='normal')
         
         # header
         st.markdown('---')
