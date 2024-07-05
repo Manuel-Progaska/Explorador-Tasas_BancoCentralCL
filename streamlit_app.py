@@ -50,7 +50,7 @@ with st.sidebar:
     selectted = option_menu(
         menu_title=None,
         options=['Swap Promedio Camara', 'TPM & Gobierno'],
-        icons=['house','database-fill', 'database-fill'],
+        icons=['database-fill', 'database-fill'],
         orientation='vertical',
         default_index=0
     )
@@ -70,34 +70,42 @@ if selectted == 'Swap Promedio Camara':
     # --- page ---
     # data
     df_data : pd.DataFrame = data(type='SWAP_CLP', start=start_, end=end_)
+    df_data = df_data[(df_data != 'NaN').any(axis=1)]
+    df_data = df_data.astype(float).round(4)
+    
+    #data metrics
+    df_aux : pd.DataFrame = df_data
+    df_aux.index = df_aux.index.astype(str)
+    df_aux = df_aux[df_aux.index.isin([start_, end_])]
+    df_aux.fillna('-', inplace=True)
     
     #metrics
+    st.markdown(f'### Tasas al {end_}')
+    st.markdown(' ')
     first_col, second_col, third_col, fourth_col = st.columns(4)
 
     with first_col:
-        st.metric(label='SPC 90d',value='-',delta='6.0%', delta_color='normal')
-        st.metric(label='SPC 180d',value='-',delta='6.0%', delta_color='normal')
+        st.metric(label='SPC 90d',value=f'{df_aux.loc[end_,'SWP_CLP_90D']}',delta='6.0%', delta_color='normal')
+        st.metric(label='SPC 180d',value=f'{df_aux.loc[end_,'SWP_CLP_180D']}',delta='6.0%', delta_color='normal')
 
     with second_col:
-        st.metric(label='SPC 360d',value='-',delta='6.0%', delta_color='normal')
-        st.metric(label='SPC 2Y',value='-',delta='6.0%', delta_color='normal')
+        st.metric(label='SPC 360d',value=f'{df_aux.loc[end_,'SWP_CLP_360D']}',delta='6.0%', delta_color='normal')
+        st.metric(label='SPC 2Y',value=f'{df_aux.loc[end_,'SWP_CLP_02Y']}',delta='6.0%', delta_color='normal')
 
     with third_col:
-        st.metric(label='SPC 3Y',value='-',delta='6.0%', delta_color='normal')
-        st.metric(label='SPC 4Y',value='-',delta='6.0%', delta_color='normal')
+        st.metric(label='SPC 3Y',value=f'{df_aux.loc[end_,'SWP_CLP_03Y']}',delta='6.0%', delta_color='normal')
+        st.metric(label='SPC 4Y',value=f'{df_aux.loc[end_,'SWP_CLP_04Y']}',delta='6.0%', delta_color='normal')
         
     with fourth_col:
-        st.metric(label='SPC 5Y',value='-',delta='6.0%', delta_color='normal')
-        st.metric(label='SPC 10Y',value='-',delta='6.0%', delta_color='normal')
+        st.metric(label='SPC 5Y',value=f'{df_aux.loc[end_,'SWP_CLP_05Y']}',delta='6.0%', delta_color='normal')
+        st.metric(label='SPC 10Y',value=f'{df_aux.loc[end_,'SWP_CLP_10Y']}',delta='6.0%', delta_color='normal')
     
     # header
     st.markdown('---')
     st.markdown('### Data histórica SPC-CLP')
     st.write(start_, end_)
 
-    # table
-    df_data = df_data[(df_data != 'NaN').any(axis=1)]
-    df_data = df_data.astype(float).round(4)
+    # table    
     st.dataframe(df_data, key='data_swp_cl', use_container_width=True)
 
 
