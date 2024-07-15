@@ -5,6 +5,7 @@ import datetime as dt
 from functools import partial
 from main import BC_Data
 
+
 # === PAGE CONFICT ===
 st.set_page_config(
     layout="wide", 
