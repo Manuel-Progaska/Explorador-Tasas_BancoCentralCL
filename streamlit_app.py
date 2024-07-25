@@ -2,6 +2,8 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 import pandas as pd
 import datetime as dt
+import matplotlib.pyplot as plt
+import plotly.express as px
 from functools import partial
 from main import BC_Data
 
@@ -43,13 +45,19 @@ def data(type:str=None, start:str=None, end:str=None) -> pd.DataFrame:
 
 # --- sidebar ---
 # image
-st.sidebar.image('assets/images/BC_LOGO.png')
+#st.sidebar.image('assets/images/BC_LOGO.png')
+
+# title
+st.sidebar.markdown('''
+                    # Explorador de Tasas Banco Central
+                    --- 
+                    ''')
 
 # menu
 with st.sidebar:
     selectted = option_menu(
         menu_title=None,
-        options=['Swap Promedio Camara', 'TPM & Gobierno'],
+        options=['Data', 'TPM Implicita'],
         icons=['database-fill', 'database-fill'],
         orientation='vertical',
         default_index=0
@@ -67,7 +75,7 @@ st.sidebar.markdown('Created by: [`Manuel Progaska`](https://cl.linkedin.com/in/
 
 ## === SWAPS ===
 
-if selectted == 'Swap Promedio Camara':
+if selectted == 'Data':
     
     selectted_swp = option_menu(
         menu_title=None,
@@ -116,6 +124,9 @@ if selectted == 'Swap Promedio Camara':
         st.markdown('### Data histórica SPC-CLP')
         st.write(start_, end_)
 
+        # line chart
+        st.line_chart(df_data,)
+        
         # table    
         st.dataframe(df_data, key='data_swp_cl', use_container_width=True)
         

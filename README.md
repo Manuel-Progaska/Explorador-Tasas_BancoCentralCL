@@ -1,13 +1,5 @@
 # Explorador de Tasas Banco Central
 
-EL proyecto [Explorador de Tasas Banco Central](https://explorador-tasasbancocentralcl-mpc.streamlit.app) genera una plataforma para explorar las tasas de interés de los instrumentos como:
+El proyecto [Explorador de Tasas Banco Central](https://explorador-tasasbancocentralcl-mpc.streamlit.app) es una plataforma para analizar las tasas de interés de los instrumentos emitidos por el Banco Central de Chile y los Swaps Promedio Cámara.
 
-- BTU & BTP
-- BCU & BCP
-- SPC CLP
-- SPC UF
-
-Además permite ver precios del tipo de cambio **USD/CLP** y la **UF**
-
-## PLataforma
 
