@@ -156,6 +156,49 @@ if selectted == 'Data':
         st.dataframe(df_data, key='data_swp_cl', use_container_width=True)
         
         
+    if selectted_swp == 'SPC UF':   
+        # --- page ---
+        # data
+        df_data : pd.DataFrame = data(type='SWAP_UF', start=start_, end=end_)
+        df_data = df_data[(df_data != 'NaN').any(axis=1)]
+        df_data = df_data.astype(float).round(4)
+        
+        #data metrics
+        df_aux : pd.DataFrame = df_data
+        df_aux.index = df_aux.index.astype(str)
+        df_aux = df_aux[df_aux.index.isin([start_, end_])]
+        df_aux.fillna('-', inplace=True)
+        
+        #metrics
+        st.markdown(f'### Tasas al {end_}')
+        st.markdown(' ')
+        deltas = start_end(df=df_data)
+        first_col, second_col, third_col = st.columns(3)
 
+
+        with first_col:
+            st.metric(label='SPC UF 1Y',value=f'{deltas["SWP_UF_01Y"][1]}',delta=f'{deltas["SWP_UF_01Y"][2]}%', delta_color='inverse')
+            st.metric(label='SPC UF 2Y',value=f'{deltas["SWP_UF_02Y"][1]}',delta=f'{deltas["SWP_UF_02Y"][2]}%', delta_color='inverse')
+
+        with second_col:
+            st.metric(label='SPC UF 3Y',value=f'{deltas["SWP_UF_03Y"][1]}',delta=f'{deltas["SWP_UF_03Y"][2]}%', delta_color='inverse')
+            st.metric(label='SPC UF 4Y',value=f'{deltas["SWP_UF_04Y"][1]}',delta=f'{deltas["SWP_UF_04Y"][2]}%', delta_color='inverse')
+            
+        with third_col:
+            st.metric(label='SPC UF 5Y',value=f'{deltas["SWP_UF_05Y"][1]}',delta=f'{deltas["SWP_UF_05Y"][2]}%', delta_color='inverse')
+            st.metric(label='SPC UF 5Y',value=f'{deltas["SWP_UF_10Y"][1]}',delta=f'{deltas["SWP_UF_10Y"][2]}%', delta_color='inverse')
+        
+        # header
+        st.markdown('---')
+        st.markdown('### Data histórica SPC-UF')
+        st.write(f'Desde {start_} hasta {end_}')
+
+        # line chart
+        fig = px.line(df_data, x=df_data.index, y=list(df_data.columns))
+        st.plotly_chart(fig)
+        
+        # table    
+        st.dataframe(df_data, key='data_UF_cl', use_container_width=True)
+      
 
     
