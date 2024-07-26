@@ -128,20 +128,20 @@ if selectted == 'Data':
         first_col, second_col, third_col, fourth_col = st.columns(4)
 
         with first_col:
-            st.metric(label='SPC 90d',value=f'{deltas['SWP_CLP_90D'][1]}',delta=f'{deltas['SWP_CLP_90D'][2]}%', delta_color='inverse')
-            st.metric(label='SPC 180d',value=f'{deltas['SWP_CLP_180D'][1]}',delta=f'{deltas['SWP_CLP_180D'][2]}%', delta_color='inverse')
+            st.metric(label='SPC 90d',value=f'{deltas["SWP_CLP_90D"][1]}',delta=f'{deltas["SWP_CLP_90D"][2]}%', delta_color='inverse')
+            st.metric(label='SPC 180d',value=f'{deltas["SWP_CLP_180D"][1]}',delta=f'{deltas["SWP_CLP_180D"][2]}%', delta_color='inverse')
 
         with second_col:
-            st.metric(label='SPC 360d',value=f'{deltas['SWP_CLP_360D'][1]}',delta=f'{deltas['SWP_CLP_360D'][2]}%', delta_color='inverse')
-            st.metric(label='SPC 2Y',value=f'{deltas['SWP_CLP_02Y'][1]}',delta=f'{deltas['SWP_CLP_02Y'][2]}%', delta_color='inverse')
+            st.metric(label='SPC 360d',value=f'{deltas["SWP_CLP_360D"][1]}',delta=f'{deltas["SWP_CLP_360D"][2]}%', delta_color='inverse')
+            st.metric(label='SPC 2Y',value=f'{deltas["SWP_CLP_02Y"][1]}',delta=f'{deltas["SWP_CLP_02Y"][2]}%', delta_color='inverse')
 
         with third_col:
-            st.metric(label='SPC 3Y',value=f'{deltas['SWP_CLP_03Y'][1]}',delta=f'{deltas['SWP_CLP_03Y'][2]}%', delta_color='inverse')
-            st.metric(label='SPC 4Y',value=f'{deltas['SWP_CLP_04Y'][1]}',delta=f'{deltas['SWP_CLP_04Y'][2]}%', delta_color='inverse')
+            st.metric(label='SPC 3Y',value=f'{deltas["SWP_CLP_03Y"][1]}',delta=f'{deltas["SWP_CLP_03Y"][2]}%', delta_color='inverse')
+            st.metric(label='SPC 4Y',value=f'{deltas["SWP_CLP_04Y"][1]}',delta=f'{deltas["SWP_CLP_04Y"][2]}%', delta_color='inverse')
             
         with fourth_col:
-            st.metric(label='PC 5Y',value=f'{deltas['SWP_CLP_05Y'][1]}',delta=f'{deltas['SWP_CLP_05Y'][2]}%', delta_color='inverse')
-            st.metric(label='PC 5Y',value=f'{deltas['SWP_CLP_10Y'][1]}',delta=f'{deltas['SWP_CLP_10Y'][2]}%', delta_color='inverse')
+            st.metric(label='PC 5Y',value=f'{deltas["SWP_CLP_05Y"][1]}',delta=f'{deltas["SWP_CLP_05Y"][2]}%', delta_color='inverse')
+            st.metric(label='PC 5Y',value=f'{deltas["SWP_CLP_10Y"][1]}',delta=f'{deltas["SWP_CLP_10Y"][2]}%', delta_color='inverse')
         
         # header
         st.markdown('---')
