@@ -1,6 +1,8 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
 import pandas as pd
+import numpy as np
+import math
 import datetime as dt
 import matplotlib.pyplot as plt
 import plotly.express as px
@@ -40,6 +42,27 @@ def data(type:str=None, start:str=None, end:str=None) -> pd.DataFrame:
     
     return df
     
+def start_end(df:pd.DataFrame) -> None:
+    
+    # columnas
+    cols : list = list(df.columns)
+    
+    # loop
+    dct : dict = {}
+    for col in cols:
+        end = df[col].iloc[0]
+        start = df[col].iloc[-1]
+        delta = np.round((end/start - 1)*100,2)
+        #delta = round(delta,3)
+        if end > start:
+            tag = '+'
+        else:
+            tag = '-'
+        dct[col] = [start, end, delta, tag]
+    
+    return dct
+    
+    
 
 ## === LAYOUT ===
 
@@ -58,14 +81,14 @@ with st.sidebar:
     selectted = option_menu(
         menu_title=None,
         options=['Data', 'TPM Implicita'],
-        icons=['database-fill', 'database-fill'],
+        icons=['bar-chart-fill', 'bar-chart-fill'],
         orientation='vertical',
         default_index=0
     )
 
 # dates
-st.sidebar.date_input('Inicio',key='start', format='YYYY-MM-DD', value=dt.datetime.now() - dt.timedelta(31))
-st.sidebar.date_input('Fin',key='end', format='YYYY-MM-DD', value=dt.datetime.now() - dt.timedelta(1))
+st.sidebar.date_input('Inicio',key='start', format='YYYY-MM-DD', value=dt.datetime.now() - dt.timedelta(93))
+st.sidebar.date_input('Fin',key='end', format='YYYY-MM-DD', value=dt.datetime.now() - dt.timedelta(2))
 start_ = str(st.session_state['start'])
 end_ = str(st.session_state['end'])
 
@@ -79,8 +102,8 @@ if selectted == 'Data':
     
     selectted_swp = option_menu(
         menu_title=None,
-        options=['SPC CLP', 'SPC UF'],
-        icons=['database-fill', 'database-fill'],
+        options=['SPC CLP', 'SPC UF' ,'TPM', 'Monedas', 'Tasas'],
+        icons=['database-fill', 'database-fill','database-fill','database-fill','database-fill'],
         orientation='horizontal',
         default_index=0
     )
@@ -101,31 +124,33 @@ if selectted == 'Data':
         #metrics
         st.markdown(f'### Tasas al {end_}')
         st.markdown(' ')
+        deltas = start_end(df=df_data)
         first_col, second_col, third_col, fourth_col = st.columns(4)
 
         with first_col:
-            st.metric(label='SPC 90d',value=f'{df_aux.loc[end_,"SWP_CLP_90D"]}',delta='', delta_color='normal')
-            st.metric(label='SPC 180d',value=f'{df_aux.loc[end_,"SWP_CLP_180D"]}',delta='6.0%', delta_color='normal')
+            st.metric(label='SPC 90d',value=f'{deltas['SWP_CLP_90D'][1]}',delta=f'{deltas['SWP_CLP_90D'][2]}%', delta_color='inverse')
+            st.metric(label='SPC 180d',value=f'{deltas['SWP_CLP_180D'][1]}',delta=f'{deltas['SWP_CLP_180D'][2]}%', delta_color='inverse')
 
         with second_col:
-            st.metric(label='SPC 360d',value=f'{df_aux.loc[end_,"SWP_CLP_360D"]}',delta='6.0%', delta_color='normal')
-            st.metric(label='SPC 2Y',value=f'{df_aux.loc[end_,"SWP_CLP_02Y"]}',delta='6.0%', delta_color='normal')
+            st.metric(label='SPC 360d',value=f'{deltas['SWP_CLP_360D'][1]}',delta=f'{deltas['SWP_CLP_360D'][2]}%', delta_color='inverse')
+            st.metric(label='SPC 2Y',value=f'{deltas['SWP_CLP_02Y'][1]}',delta=f'{deltas['SWP_CLP_02Y'][2]}%', delta_color='inverse')
 
         with third_col:
-            st.metric(label='SPC 3Y',value=f'{df_aux.loc[end_,"SWP_CLP_03Y"]}',delta='6.0%', delta_color='normal')
-            st.metric(label='SPC 4Y',value=f'{df_aux.loc[end_,"SWP_CLP_04Y"]}',delta='6.0%', delta_color='normal')
+            st.metric(label='SPC 3Y',value=f'{deltas['SWP_CLP_03Y'][1]}',delta=f'{deltas['SWP_CLP_03Y'][2]}%', delta_color='inverse')
+            st.metric(label='SPC 4Y',value=f'{deltas['SWP_CLP_04Y'][1]}',delta=f'{deltas['SWP_CLP_04Y'][2]}%', delta_color='inverse')
             
         with fourth_col:
-            st.metric(label='SPC 5Y',value=f'{df_aux.loc[end_,"SWP_CLP_05Y"]}',delta='6.0%', delta_color='normal')
-            st.metric(label='SPC 10Y',value=f'{df_aux.loc[end_,"SWP_CLP_10Y"]}',delta='6.0%', delta_color='normal')
+            st.metric(label='PC 5Y',value=f'{deltas['SWP_CLP_05Y'][1]}',delta=f'{deltas['SWP_CLP_05Y'][2]}%', delta_color='inverse')
+            st.metric(label='PC 5Y',value=f'{deltas['SWP_CLP_10Y'][1]}',delta=f'{deltas['SWP_CLP_10Y'][2]}%', delta_color='inverse')
         
         # header
         st.markdown('---')
         st.markdown('### Data histórica SPC-CLP')
-        st.write(start_, end_)
+        st.write(f'Desde {start_} hasta {end_}')
 
         # line chart
-        st.line_chart(df_data,)
+        fig = px.line(df_data, x=df_data.index, y=list(df_data.columns))
+        st.plotly_chart(fig)
         
         # table    
         st.dataframe(df_data, key='data_swp_cl', use_container_width=True)
