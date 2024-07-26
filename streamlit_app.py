@@ -156,6 +156,7 @@ if selectted == 'Data':
         st.dataframe(df_data, key='data_swp_cl', use_container_width=True)
         
         
+        
     if selectted_swp == 'SPC UF':   
         # --- page ---
         # data
