@@ -81,7 +81,7 @@ with st.sidebar:
     selectted = option_menu(
         menu_title=None,
         options=['Data', 'TPM Implicita'],
-        icons=['bar-chart-fill', 'bar-chart-fill'],
+        icons=['database-fill', 'bar-chart-fill'],
         orientation='vertical',
         default_index=0
     )
@@ -96,13 +96,13 @@ end_ = str(st.session_state['end'])
 st.sidebar.markdown('Created by: [`Manuel Progaska`](https://cl.linkedin.com/in/manuel-progaska-concha-98b304135)')
 
 
-## === SWAPS ===
+## === DATA ===
 
 if selectted == 'Data':
     
     selectted_swp = option_menu(
         menu_title=None,
-        options=['SPC CLP', 'SPC UF' ,'TPM', 'Monedas', 'Tasas'],
+        options=['SPC CLP', 'SPC UF' ,'Govierno', 'Monedas'],
         icons=['database-fill', 'database-fill','database-fill','database-fill','database-fill'],
         orientation='horizontal',
         default_index=0
@@ -201,4 +201,20 @@ if selectted == 'Data':
         st.dataframe(df_data, key='data_UF_cl', use_container_width=True)
       
 
+    if selectted_swp == 'Govierno':
+        # --- page ---
+        # data
+        df_data : pd.DataFrame = data(type='GOVT_UF', start=start_, end=end_)
+        df_data = df_data[(df_data != 'NaN').any(axis=1)]
+        df_data = df_data.astype(float).round(4)
+        
+        st.markdown('### Tasas en UF')
+        first_col, second_col = st.columns(2)
+        
+        with first_col:
+            st.dataframe(df_data)
+        
+        with second_col:
+            fig = px.line(df_data, x=df_data.index, y=list(df_data.columns))
+            st.plotly_chart(fig)
     
