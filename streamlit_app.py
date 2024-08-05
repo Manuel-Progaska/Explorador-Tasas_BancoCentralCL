@@ -68,11 +68,11 @@ def start_end(df:pd.DataFrame) -> None:
 
 # --- sidebar ---
 # image
-#st.sidebar.image('assets/images/BC_LOGO.png')
+st.sidebar.image('assets/images/BC_LOGO.png')
 
 # title
 st.sidebar.markdown('''
-                    # Explorador de Tasas Banco Central
+                    # Explorador Banco Central Chile
                     --- 
                     ''')
 
@@ -80,14 +80,14 @@ st.sidebar.markdown('''
 with st.sidebar:
     selectted = option_menu(
         menu_title=None,
-        options=['Data', 'TPM Implicita'],
+        options=['Tasas', 'Inflación'],
         icons=['database-fill', 'bar-chart-fill'],
         orientation='vertical',
         default_index=0
     )
 
 # dates
-st.sidebar.date_input('Inicio',key='start', format='YYYY-MM-DD', value=dt.datetime.now() - dt.timedelta(93))
+st.sidebar.date_input('Inicio',key='start', format='YYYY-MM-DD', value=dt.datetime.now() - dt.timedelta(365))
 st.sidebar.date_input('Fin',key='end', format='YYYY-MM-DD', value=dt.datetime.now() - dt.timedelta(2))
 start_ = str(st.session_state['start'])
 end_ = str(st.session_state['end'])
@@ -98,14 +98,14 @@ st.sidebar.markdown('Created by: [`Manuel Progaska`](https://cl.linkedin.com/in/
 
 ## === DATA ===
 
-if selectted == 'Data':
+if selectted == 'Tasas':
     
     selectted_swp = option_menu(
         menu_title=None,
-        options=['SPC CLP', 'SPC UF' ,'Govierno', 'Monedas'],
+        options=['SPC CLP', 'SPC UF' ,'Gobierno', 'Monedas'],
         icons=['database-fill', 'database-fill','database-fill','database-fill','database-fill'],
         orientation='horizontal',
-        default_index=0
+        default_index=1
     )
     
     if selectted_swp == 'SPC CLP':   
@@ -122,7 +122,7 @@ if selectted == 'Data':
         df_aux.fillna('-', inplace=True)
         
         #metrics
-        st.markdown(f'### Tasas al {end_}')
+        st.markdown(f'### Swap Promedio Camara CLP: {end_}')
         st.markdown(' ')
         deltas = start_end(df=df_data)
         first_col, second_col, third_col, fourth_col = st.columns(4)
@@ -141,7 +141,7 @@ if selectted == 'Data':
             
         with fourth_col:
             st.metric(label='PC 5Y',value=f'{deltas["SWP_CLP_05Y"][1]}',delta=f'{deltas["SWP_CLP_05Y"][2]}%', delta_color='inverse')
-            st.metric(label='PC 5Y',value=f'{deltas["SWP_CLP_10Y"][1]}',delta=f'{deltas["SWP_CLP_10Y"][2]}%', delta_color='inverse')
+            st.metric(label='PC 10Y',value=f'{deltas["SWP_CLP_10Y"][1]}',delta=f'{deltas["SWP_CLP_10Y"][2]}%', delta_color='inverse')
         
         # header
         st.markdown('---')
@@ -149,11 +149,13 @@ if selectted == 'Data':
         st.write(f'Desde {start_} hasta {end_}')
 
         # line chart
-        fig = px.line(df_data, x=df_data.index, y=list(df_data.columns))
+        st.multiselect('Curvas', tuple(df_data.columns), default=tuple(df_data.columns),key='plot_filter')
+        df_linechart : pd.DataFrame = df_data[list(st.session_state['plot_filter'])]
+        fig = px.line(df_linechart, x=df_linechart.index, y=list(df_linechart.columns))
         st.plotly_chart(fig)
         
         # table    
-        st.dataframe(df_data, key='data_swp_cl', use_container_width=True)
+        st.dataframe(df_linechart, key='data_swp_cl', use_container_width=True)
         
         
     if selectted_swp == 'SPC UF':   
@@ -170,7 +172,7 @@ if selectted == 'Data':
         df_aux.fillna('-', inplace=True)
         
         #metrics
-        st.markdown(f'### Tasas al {end_}')
+        st.markdown(f'### Swap Promedio Camara UF {end_}')
         st.markdown(' ')
         deltas = start_end(df=df_data)
         first_col, second_col, third_col = st.columns(3)
@@ -186,7 +188,7 @@ if selectted == 'Data':
             
         with third_col:
             st.metric(label='SPC UF 5Y',value=f'{deltas["SWP_UF_05Y"][1]}',delta=f'{deltas["SWP_UF_05Y"][2]}%', delta_color='inverse')
-            st.metric(label='SPC UF 5Y',value=f'{deltas["SWP_UF_10Y"][1]}',delta=f'{deltas["SWP_UF_10Y"][2]}%', delta_color='inverse')
+            st.metric(label='SPC UF 10Y',value=f'{deltas["SWP_UF_10Y"][1]}',delta=f'{deltas["SWP_UF_10Y"][2]}%', delta_color='inverse')
         
         # header
         st.markdown('---')
@@ -194,27 +196,37 @@ if selectted == 'Data':
         st.write(f'Desde {start_} hasta {end_}')
 
         # line chart
-        fig = px.line(df_data, x=df_data.index, y=list(df_data.columns))
+        st.multiselect('Curvas', tuple(df_data.columns), default=tuple(df_data.columns),key='plot_filter')
+        df_linechart : pd.DataFrame = df_data[list(st.session_state['plot_filter'])]
+        fig = px.line(df_linechart, x=df_linechart.index, y=list(df_linechart.columns))
         st.plotly_chart(fig)
         
         # table    
-        st.dataframe(df_data, key='data_UF_cl', use_container_width=True)
+        st.dataframe(df_linechart, key='data_UF_cl', use_container_width=True)
       
 
-    if selectted_swp == 'Govierno':
+    if selectted_swp == 'Gobierno':
         # --- page ---
-        # data
-        df_data : pd.DataFrame = data(type='GOVT_UF', start=start_, end=end_)
-        df_data = df_data[(df_data != 'NaN').any(axis=1)]
-        df_data = df_data.astype(float).round(4)
+        # data uf
+        df_data_uf : pd.DataFrame = data(type='GOVT_UF', start=start_, end=end_)
+        df_data_uf = df_data_uf[(df_data_uf != 'NaN').any(axis=1)]
+        df_data_uf = df_data_uf.astype(float).round(4)
         
-        st.markdown('### Tasas en UF')
+        # data clp
+        df_data_clp : pd.DataFrame = data(type='GOVT_CLP', start=start_, end=end_)
+        df_data_clp = df_data_clp[(df_data_clp != 'NaN').any(axis=1)]
+        df_data_clp = df_data_clp.astype(float).round(4)
+        
+        st.markdown('### Bonos de Gobierno en UF')
         first_col, second_col = st.columns(2)
         
+        
         with first_col:
-            st.dataframe(df_data)
+            st.dataframe(df_data_uf)
+            st.dataframe(df_data_clp)
         
         with second_col:
-            fig = px.line(df_data, x=df_data.index, y=list(df_data.columns))
+            data_line_chart = df_data_uf.fillna(method='ffill')
+            fig = px.line(data_line_chart, x=data_line_chart.index, y=list(data_line_chart.columns))
             st.plotly_chart(fig)
     
